@@ -1,0 +1,6 @@
+<div class="breadcrumb-container">
+  <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+  <div class="datetime">
+    {{ currentTime | date : "fullDate" }} {{ currentTime | date : "shortTime" }}
+  </div>
+</div>

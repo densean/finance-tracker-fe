@@ -1,0 +1,9 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <h4>{{ cardHeaderTitle }}</h4>
+  </ng-template>
+  <ng-content select="[cardBody]"></ng-content>
+  <ng-template pTemplate="footer">
+    <ng-content select="[cardFooter]"></ng-content>
+  </ng-template>
+</p-card>

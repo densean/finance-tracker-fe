@@ -1,0 +1,27 @@
+<div
+  class="p-field"
+  [ngClass]="{
+    'has-error':
+      controlName.invalid && (controlName.dirty || controlName.touched)
+  }"
+>
+  <label for="web-dropdown-title">{{ inputTitle }}</label>
+  <p-dropdown
+    [formControl]="controlName"
+    [options]="dropDownOptions"
+    [placeholder]="placeholderLabel"
+    optionLabel="name"
+    optionValue="value"
+    [virtualScroll]="true"
+    [virtualScrollItemSize]="38"
+  ></p-dropdown>
+  <small id="web-dropdown-help" *ngIf="dropDownDescription">{{
+    dropDownDescription
+  }}</small>
+  <small
+    class="p-error"
+    *ngIf="controlName.invalid && (controlName.dirty || controlName.touched)"
+  >
+    {{ errorMessage }}
+  </small>
+</div>

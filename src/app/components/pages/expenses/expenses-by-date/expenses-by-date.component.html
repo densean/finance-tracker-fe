@@ -1,0 +1,320 @@
+<div class="web-expenses-by-date p-field p-col-12 p-md-4 text-center">
+  <div class="col-10 col-offset-1 text-center">
+    <div class="text-center grid align-content-center year-nav">
+      <i
+        class="pi pi-angle-left col-1 col-offset-4 align-content-center"
+        [ngClass]="{ disabled: isPreviousYearDisabled() }"
+        (click)="goToPreviousYear()"
+      >
+      </i>
+      <h3 class="col-2 text-center align-content-center">{{ selectedYear }}</h3>
+      <i
+        class="pi pi-angle-right col-1 align-content-center"
+        [ngClass]="{ disabled: isNextYearDisabled() }"
+        (click)="goToNextYear()"
+      >
+      </i>
+    </div>
+    <!-- [activeIndex]="selectedMonth" -->
+    <p-tabView
+      class="text-center"
+      [(activeIndex)]="selectedMonth"
+      (click)="updateSelectedMonth()"
+    >
+      <p-tabPanel *ngFor="let month of months" [header]="month">
+        <div class="col-12 grid justify-content-center">
+          <div
+            class="z-5 col-12 text-left align-content-center absolute arrow-navigators"
+            style="height: 55vh; width: 45%"
+          >
+            <i
+              class="pi pi-angle-left left-0"
+              style="font-size: 2.5rem"
+              (click)="goToPreviousDay()"
+              [ngClass]="{ disabled: isPreviousDayDisabled() }"
+            ></i>
+            <i
+              class="pi pi-angle-right right-0 absolute"
+              style="font-size: 2.5rem"
+              (click)="goToNextDay()"
+              [ngClass]="{ disabled: isNextDayDisabled() }"
+            ></i>
+          </div>
+          <div
+            class="border-round b-3 w-20rem shadow-4 h-29rem m-5 justify-content-center grid z-4 bg-white"
+          >
+            <div
+              class="border-round bg-primary w-19rem h-3rem mt-2 align-content-center align-items-center"
+            >
+              <h3 class="m-auto text-white">
+                {{ displayDates[2] | date : "MMMM dd" }}
+              </h3>
+            </div>
+
+            <div class="col-12 h-21rem">
+              <div
+                class="col-12 grid align-items-center m-0 p-0"
+                style="height: 4rem"
+                *ngFor="let expenses of displayDatesExpenses[2]"
+              >
+                <div
+                  class="day-category border-round bg-primary w-3rem h-3rem flex align-items-center justify-content-center col-2"
+                >
+                  <mat-icon>
+                    {{ determineCategoryIcon(expenses.category) }}
+                  </mat-icon>
+                </div>
+                <div class="col-7 flex align-items-center">
+                  <p class="m-0">{{ expenses.name }}</p>
+                </div>
+                <div
+                  class="col-3 flex align-items-center justify-content-end m-0 p-0"
+                >
+                  <h5>{{ expenses.amount | currency : "PHP" }}</h5>
+                </div>
+              </div>
+            </div>
+            <div class="h-4rem w-20rem col-12 m-0 grid">
+              <hr
+                style="
+                  border: 0;
+                  border-top: 1px dashed #5ecabe;
+                  height: 1px;
+                  margin: 0;
+                  width: 100%;
+                "
+              />
+              <h4 class="col-8 text-left m-auto p-0">Total</h4>
+              <h5 class="col-4 text-right m-auto p-0">
+                {{
+                  getTotalForExpenses(displayDatesExpenses[2])
+                    | currency : "PHP"
+                }}
+              </h5>
+            </div>
+          </div>
+          <div class="z-1">
+            <div
+              class="border-round b-3 w-20rem shadow-4 h-29rem m-5 justify-content-center grid absolute opacity-40 bg-white cards-z-1"
+              style="left: 23%"
+            >
+              <div
+                class="border-round bg-primary w-19rem h-3rem mt-2 align-content-center align-items-center"
+              >
+                <h3 class="m-auto text-white">
+                  {{ displayDates[0] | date : "MMMM dd" }}
+                </h3>
+              </div>
+
+              <div class="col-12 h-21rem">
+                <div
+                  class="col-12 grid align-items-center m-0 p-0"
+                  style="height: 4rem"
+                  *ngFor="let expenses of displayDatesExpenses[0]"
+                >
+                  <div
+                    class="day-category border-round bg-primary w-3rem h-3rem flex align-items-center justify-content-center col-2"
+                  >
+                    <mat-icon>
+                      {{ determineCategoryIcon(expenses.category) }}
+                    </mat-icon>
+                  </div>
+                  <div class="col-7 flex align-items-center">
+                    <p class="m-0">{{ expenses.name }}</p>
+                  </div>
+                  <div
+                    class="col-3 flex align-items-center justify-content-end m-0 p-0"
+                  >
+                    <h5>{{ expenses.amount | currency : "PHP" }}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="h-4rem w-20rem col-12 m-0 grid">
+                <hr
+                  style="
+                    border: 0;
+                    border-top: 1px dashed #5ecabe;
+                    height: 1px;
+                    margin: 0;
+                    width: 100%;
+                  "
+                />
+                <h4 class="col-8 text-left m-auto p-0">Total</h4>
+                <h5 class="col-4 text-right m-auto p-0">
+                  {{
+                    getTotalForExpenses(displayDatesExpenses[0])
+                      | currency : "PHP"
+                  }}
+                </h5>
+              </div>
+            </div>
+            <div
+              class="border-round b-3 w-20rem shadow-4 h-29rem m-5 justify-content-center grid absolute opacity-40 bg-white cards-z-1"
+              style="right: 23%"
+            >
+              <div
+                class="border-round bg-primary w-19rem h-3rem mt-2 align-content-center align-items-center"
+              >
+                <h3 class="m-auto text-white">
+                  {{ displayDates[4] | date : "MMM dd" }}
+                </h3>
+              </div>
+
+              <div class="col-12 h-21rem">
+                <div
+                  class="col-12 grid align-items-center m-0 p-0"
+                  style="height: 4rem"
+                  *ngFor="let expenses of displayDatesExpenses[4]"
+                >
+                  <div
+                    class="day-category border-round bg-primary w-3rem h-3rem flex align-items-center justify-content-center col-2"
+                  >
+                    <mat-icon>
+                      {{ determineCategoryIcon(expenses.category) }}
+                    </mat-icon>
+                  </div>
+                  <div class="col-7 flex align-items-center">
+                    <p class="m-0">{{ expenses.name }}</p>
+                  </div>
+                  <div
+                    class="col-3 flex align-items-center justify-content-end m-0 p-0"
+                  >
+                    <h5>{{ expenses.amount | currency : "PHP" }}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="h-4rem w-20rem col-12 m-0 grid">
+                <hr
+                  style="
+                    border: 0;
+                    border-top: 1px dashed #5ecabe;
+                    height: 1px;
+                    margin: 0;
+                    width: 100%;
+                  "
+                />
+                <h4 class="col-8 text-left m-auto p-0">Total</h4>
+                <h5 class="col-4 text-right m-auto p-0">
+                  {{
+                    getTotalForExpenses(displayDatesExpenses[4])
+                      | currency : "PHP"
+                  }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="z-3">
+            <div
+              class="border-round b-3 w-20rem shadow-4 h-29rem m-5 justify-content-center grid absolute opacity-80 cards-z-3 bg-white"
+              style="left: 30%"
+            >
+              <div
+                class="border-round bg-primary w-19rem h-3rem mt-2 align-content-center align-items-center"
+              >
+                <h3 class="m-auto text-white">
+                  {{ displayDates[1] | date : "MMM dd" }}
+                </h3>
+              </div>
+
+              <div class="col-12 h-21rem">
+                <div
+                  class="col-12 grid align-items-center m-0 p-0"
+                  style="height: 4rem"
+                  *ngFor="let expenses of displayDatesExpenses[1]"
+                >
+                  <div
+                    class="day-category border-round bg-primary w-3rem h-3rem flex align-items-center justify-content-center col-2"
+                  >
+                    <mat-icon>
+                      {{ determineCategoryIcon(expenses.category) }}
+                    </mat-icon>
+                  </div>
+                  <div class="col-7 flex align-items-center">
+                    <p class="m-0">{{ expenses.name }}</p>
+                  </div>
+                  <div
+                    class="col-3 flex align-items-center justify-content-end m-0 p-0"
+                  >
+                    <h5>{{ expenses.amount }}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="h-4rem w-20rem col-12 m-0 grid">
+                <hr
+                  style="
+                    border: 0;
+                    border-top: 1px dashed #5ecabe;
+                    height: 1px;
+                    margin: 0;
+                    width: 100%;
+                  "
+                />
+                <h4 class="col-8 text-left m-auto p-0">Total</h4>
+                <h5 class="col-4 text-right m-auto p-0">
+                  {{
+                    getTotalForExpenses(displayDatesExpenses[1])
+                      | currency : "PHP"
+                  }}
+                </h5>
+              </div>
+            </div>
+            <div
+              class="border-round b-3 w-20rem shadow-4 h-29rem m-5 justify-content-center grid absolute opacity-80 cards-z-3 bg-white"
+              style="right: 30%"
+            >
+              <div
+                class="border-round bg-primary w-19rem h-3rem mt-2 align-content-center align-items-center"
+              >
+                <h3 class="m-auto text-white">
+                  {{ displayDates[3] | date : "MMM dd" }}
+                </h3>
+              </div>
+
+              <div class="col-12 h-21rem">
+                <div
+                  class="col-12 grid align-items-center m-0 p-0"
+                  style="height: 4rem"
+                  *ngFor="let expenses of displayDatesExpenses[3]"
+                >
+                  <div
+                    class="day-category border-round bg-primary w-3rem h-3rem flex align-items-center justify-content-center col-2"
+                  >
+                    <mat-icon>
+                      {{ determineCategoryIcon(expenses.category) }}
+                    </mat-icon>
+                  </div>
+                  <div class="col-7 flex align-items-center">
+                    <p class="m-0">{{ expenses.name }}</p>
+                  </div>
+                  <div
+                    class="col-3 flex align-items-center justify-content-end m-0 p-0"
+                  >
+                    <h5>{{ expenses.amount }}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="h-4rem w-20rem col-12 m-0 grid">
+                <hr
+                  style="
+                    border: 0;
+                    border-top: 1px dashed #5ecabe;
+                    height: 1px;
+                    margin: 0;
+                    width: 100%;
+                  "
+                />
+                <h4 class="col-8 text-left m-auto p-0">Total</h4>
+                <h5 class="col-4 text-right m-auto p-0">
+                  {{
+                    getTotalForExpenses(displayDatesExpenses[3])
+                      | currency : "PHP"
+                  }}
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

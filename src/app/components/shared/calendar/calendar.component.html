@@ -1,0 +1,24 @@
+<div
+  class="card flex flex-wrap gap-3 p-fluid p-field"
+  [ngClass]="{
+    'has-error':
+      controlName.invalid && (controlName.dirty || controlName.touched)
+  }"
+>
+  <div class="flex-auto">
+    <label for="icondisplay" class="block">{{ inputTitle }}</label>
+    <p-calendar
+      [showIcon]="true"
+      [formControl]="controlName"
+      inputId="icondisplay"
+      [placeholder]="calendarPlaceHolder"
+    />
+    <small
+      class="p-error"
+      *ngIf="controlName.invalid && (controlName.dirty || controlName.touched)"
+    >
+      {{ errorMessage }}
+    </small>
+    <!-- dateFormat="dd.mm.yy" -->
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="view-modal">
+  <p-dialog
+    [header]="viewModalHeader"
+    [modal]="true"
+    [(visible)]="isModalVisible"
+    [style]="{ width: '40rem' }"
+    (onHide)="onModalHide()"
+    class="text-center"
+  >
+    <div class="grid col-12">
+      <div class="col-10 col-offset-1">
+        <ng-content select="[viewModalBody]"> </ng-content>
+      </div>
+    </div>
+  </p-dialog>
+</div>

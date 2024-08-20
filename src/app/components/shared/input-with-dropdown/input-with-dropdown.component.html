@@ -1,0 +1,42 @@
+<div
+  class="web-input-group p-field"
+  [ngClass]="{
+    'has-error':
+      controlName.invalid && (controlName.dirty || controlName.touched)
+  }"
+>
+  <label for="web-input-group-title">{{ inputTitle }}</label>
+  <div class="grid col-12 input-group" [ngClass]="{ focused: isFocused }">
+    <input
+      type="number"
+      [formControl]="controlName"
+      pInputText
+      [placeholder]="inputPlaceHolder"
+      class="col-7"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      [ngClass]="{ focused: isFocused }"
+    />
+    <p-dropdown
+      [formControl]="dropDownControlName"
+      [options]="dropDownOptions"
+      [placeholder]="dropDownPlaceHolder"
+      optionLabel="name"
+      optionValue="value"
+      class="col-5"
+      (focus)="onFocus()"
+      (blue)="onBlur()"
+      [ngClass]="{ focused: isFocused }"
+    />
+  </div>
+
+  <small id="web-input-help" *ngIf="dropDownDescription">{{
+    dropDownDescription
+  }}</small>
+  <small
+    class="p-error"
+    *ngIf="controlName.invalid && (controlName.dirty || controlName.touched)"
+  >
+    {{ errorMessage }}
+  </small>
+</div>

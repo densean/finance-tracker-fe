@@ -1,0 +1,25 @@
+<div
+  class="p-field web-text-area"
+  [ngClass]="{
+    'has-error':
+      controlName.invalid && (controlName.dirty || controlName.touched)
+  }"
+>
+  <label for="web-input-title">{{ inputTitle }}</label>
+  <textarea
+    [formControl]="controlName"
+    [placeholder]="textAreaPlaceholder"
+    rows="2"
+    cols="30"
+    pInputTextarea
+  ></textarea>
+  <small id="web-input-help" *ngIf="textAreaDescription">{{
+    textAreaDescription
+  }}</small>
+  <small
+    class="p-error"
+    *ngIf="controlName.invalid && (controlName.dirty || controlName.touched)"
+  >
+    {{ errorMessage }}
+  </small>
+</div>

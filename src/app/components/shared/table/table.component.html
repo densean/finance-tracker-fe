@@ -1,0 +1,114 @@
+<div class="grid">
+  <p-table
+    [value]="tableItems"
+    [paginator]="true"
+    [rows]="tableRows"
+    [scrollable]="true"
+    [scrollHeight]="tableScrollHeight"
+    [rowsPerPageOptions]="[tableRows]"
+    [sortField]="tableProperties[0]"
+    [sortOrder]="-1"
+    class="p-datatable-gridlines p-datatable-striped col-12"
+    *ngIf="tableItems.length"
+  >
+    <ng-template pTemplate="header">
+      <tr class="p-flex">
+        <th
+          *ngFor="let item of tableProperties"
+          [pSortableColumn]="item"
+          class="p-flex-1 text-center"
+        >
+          <span
+            *ngIf="item === 'remarks'; else hiddenHeader"
+            style="visibility: hidden"
+          ></span>
+          <ng-template #hiddenHeader>
+            <span
+              *ngIf="item === 'id'; else normalHeader"
+              style="visibility: hidden"
+            ></span>
+          </ng-template>
+          <ng-template #normalHeader>
+            {{ item.charAt(0).toUpperCase() + item.slice(1) }}
+            <p-sortIcon [field]="item" />
+          </ng-template>
+        </th>
+        <th
+          style="width: 10%"
+          class="text-center"
+          *ngIf="allowViewEditActions"
+        ></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tableItem>
+      <tr class="p-flex">
+        <td
+          class="p-flex-1 text-center"
+          *ngFor="let property of tableProperties"
+        >
+          <span
+            *ngIf="property === 'remarks'; else idField"
+            style="visibility: hidden"
+          ></span>
+          <ng-template #idField>
+            <span
+              *ngIf="property === 'id'; else dateField"
+              style="visibility: hidden"
+            ></span>
+          </ng-template>
+          <ng-template #dateField>
+            <span *ngIf="property === 'date'; else defaultField">
+              {{ tableItem[property] | date : "MMM dd yyyy" }}
+            </span>
+          </ng-template>
+
+          <ng-template #defaultField>
+            <span
+              *ngIf="property === 'amount'; else normalField"
+              class="td-amount"
+            >
+              {{ tableItem[property] | currency : "PHP" }}
+            </span>
+
+            <ng-template #normalField>
+              {{ tableItem[property] }}
+            </ng-template>
+          </ng-template>
+        </td>
+
+        <td
+          class="p-flex-1 text-center table-icons"
+          *ngIf="allowViewEditActions"
+        >
+          <a
+            style="cursor: pointer; margin-right: 5px"
+            (click)="onClickView(tableItem)"
+          >
+            <i class="pi pi-eye text-primary"></i>
+          </a>
+          <a
+            style="cursor: pointer; margin-right: 5px"
+            (click)="onClickEdit(tableItem)"
+          >
+            <i class="pi pi-pencil text-primary"></i>
+          </a>
+
+          <a style="cursor: pointer" (click)="onClickDelete(tableItem)">
+            <i class="pi pi-trash text-primary"></i>
+          </a>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <web-empty-resources
+    *ngIf="!tableItems.length"
+    class="col-12"
+    [emptyResourcesMessage]="emptyTableMessage"
+    [emptyResourcesSubMessage]="emptyTableSubMessage"
+  >
+    <div empty-resources-footer>
+      <ng-content select="[empty-footer]"></ng-content>
+    </div>
+  </web-empty-resources>
+</div>

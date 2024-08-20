@@ -1,0 +1,49 @@
+<div class="w-20rem border border-round-xl shadow-4 web-bills-cards">
+  <div class="card-header h-6rem bg-primary border-round-top-xl">
+    <p class="pl-5">
+      {{ bills.name }}
+    </p>
+    <p class="pl-5">
+      {{ bills.id }}
+    </p>
+    <div class="term-occurrence">
+      <div class="loading-bar">
+        <div
+          class="fill bg-orange-200 shadow-2"
+          [style.width]="widthFillInPercentage"
+        ></div>
+      </div>
+      <p class="text-right pr-4 text-300 pt-1">
+        {{ bills.occurrence * 2 }} of {{ bills.term }}
+      </p>
+    </div>
+  </div>
+  <div class="card-body p-0 bg-white">
+    <div class="grid col-12">
+      <p class="col-5 p-0 pl-5 text-left">Due amount</p>
+      <p class="col-5 col-offset-2 p-0 pr-3 text-right">
+        {{ bills.amount | currency : "PHP" }}
+      </p>
+      <p class="col-5 text-left p-0 pl-5">Due date</p>
+      <p class="col-5 col-offset-2 p-0 pr-3 text-right">
+        {{ bills.dueDate | date : "MMM dd YYYY" }}
+      </p>
+    </div>
+  </div>
+  <hr class="w-20rem p-0" />
+  <div class="card-footer h-3rem grid col-12 p-0">
+    <web-button
+      buttonTitle="View"
+      class="col-3 col-offset-6 cancel-button pl-3"
+    ></web-button>
+    <!-- (click)="onViewBill(item)" -->
+    <web-button buttonTitle="Paid" class="col-3 pr-4 pl-0"></web-button>
+    <!-- (click)="onUpdatePaid(item)" -->
+    <!-- <div class="col-6 col-offset-7"> -->
+    <!-- <div class="grid"> -->
+    <!-- <web-button buttonTitle="View" class="col-3" />
+      <web-button buttonTitle="Paid" class="col-3" /> -->
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+</div>

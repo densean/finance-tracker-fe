@@ -1,0 +1,172 @@
+<div class="web-bills grid">
+  <div class="col-5">
+    <div class="grid">
+      <div class="col-12 text-center">
+        <h3>Add bills</h3>
+      </div>
+      <div class="col-8 col-offset-2">
+        <web-input
+          [inputTitle]="inputDetails.name.inputTitle"
+          [controlName]="billsForm.controls.name"
+          inputType="text"
+          [inputPlaceHolder]="inputDetails.name.placeholder"
+          [errorMessage]="getBillsErrorMessage('name')"
+        />
+        <web-input
+          [inputTitle]="inputDetails.amount.inputTitle"
+          [controlName]="billsForm.controls.amount"
+          inputType="number"
+          [inputPlaceHolder]="inputDetails.amount.placeholder"
+          [errorMessage]="getBillsErrorMessage('amount')"
+        />
+        <web-calendar
+          [inputTitle]="inputDetails.dueDate.inputTitle"
+          [controlName]="billsForm.controls.dueDate"
+          [calendarPlaceHolder]="inputDetails.dueDate.placeholder"
+          [errorMessage]="getBillsErrorMessage('dueDate')"
+        />
+
+        <web-input-with-dropdown
+          [inputTitle]="inputDetails.term.inputTitle"
+          [dropDownOptions]="billsTermSchedule"
+          [inputPlaceHolder]="inputDetails.term.placeholder"
+          [controlName]="billsForm.controls.term"
+          [dropDownControlName]="billsForm.controls.termSchedule"
+          [dropDownPlaceHolder]="inputDetails.termSchedule.placeholder"
+          [errorMessage]="getBillsErrorMessage('term')"
+          [errorMessage]="getBillsErrorMessage('termSchedule')"
+        />
+
+        <web-dropdown
+          [inputTitle]="inputDetails.occurrence.inputTitle"
+          [controlName]="billsForm.controls.occurrence"
+          [dropDownOptions]="billsOccurrence"
+          [placeholderLabel]="inputDetails.occurrence.placeholder"
+          [errorMessage]="getBillsErrorMessage('occurrence')"
+        />
+
+        <web-text-area
+          [inputTitle]="inputDetails.notes.inputTitle"
+          [controlName]="billsForm.controls.notes"
+          [textAreaPlaceholder]="inputDetails.notes.placeholder"
+        />
+        <web-button buttonTitle="Save bill" (click)="saveBill()"> </web-button>
+        <br />
+        <br />
+      </div>
+    </div>
+  </div>
+  <div class="col-7 p-0" *ngIf="cardBillsList.length">
+    <div class="col-12 grid cards">
+      <div class="col-4" *ngFor="let item of cardBillsList">
+        <web-cards [cardHeaderTitle]="item.name">
+          <div cardBody="text-center">Due date: {{ item.dueDate | date }}</div>
+          <div cardFooter class="grid col-12">
+            <web-button
+              buttonTitle="View"
+              class="col-3 col-offset-6 cancel-button"
+              (click)="onViewBill(item)"
+            ></web-button>
+            <web-button
+              buttonTitle="Paid"
+              class="col-3"
+              (click)="onUpdatePaid(item)"
+            ></web-button>
+          </div>
+        </web-cards>
+      </div>
+      <div class="col-4 col-offset-8 view-anchor">
+        <h3>
+          <a
+            >View All Bills
+            <i class="pi pi-chevron-right"></i>
+          </a>
+        </h3>
+      </div>
+    </div>
+
+    <div class="inline-calendar col-12">
+      <p-calendar
+        [(ngModel)]="selectedDate"
+        [inline]="true"
+        (onSelect)="onDateSelect($event)"
+      >
+        <ng-template pTemplate="date" let-date>
+          <div
+            *ngIf="
+              checkDateForBills(date);
+              then highlightedDate;
+              else normalDate
+            "
+          ></div>
+          <ng-template #highlightedDate>
+            <span class="highlight-date">{{ date.day }}</span>
+          </ng-template>
+          <ng-template #normalDate>
+            <span [ngStyle]="{ backgroundColor: 'inherit' }">{{
+              date.day
+            }}</span>
+          </ng-template>
+        </ng-template>
+      </p-calendar>
+    </div>
+  </div>
+
+  <div class="col-7" *ngIf="!cardBillsList.length">
+    <web-empty-resources
+      emptyResourcesMessage="No bills found"
+      emptyResourcesSubMessage="Please add your bills"
+    ></web-empty-resources>
+  </div>
+
+  <web-view-modal
+    [viewModalHeader]="selectedDateHeader"
+    [isModalVisible]="isViewBill"
+    (onHide)="onViewBillHide()"
+  >
+    <div viewModalBody class="col-12 grid" *ngFor="let bill of viewBillDetails">
+      <div class="col-4 text-left"><h4>Name</h4></div>
+      <div class="col-4 col-offset-4 align-content-center text-left">
+        {{ bill.name }}
+      </div>
+
+      <div class="col-4 text-left"><h4>Amount</h4></div>
+      <div class="col-4 col-offset-4 align-content-center text-left">
+        {{ bill.amount | currency : "PHP" }}
+      </div>
+
+      <div class="col-4 text-left"><h4>Due date</h4></div>
+      <div class="col-4 col-offset-4 align-content-center text-left">
+        {{ bill.dueDate | date : "MMM dd YYYY" }}
+      </div>
+
+      <div class="col-4 text-left"><h4>Paid</h4></div>
+      <div class="col-4 col-offset-4 align-content-center text-left">
+        {{ bill.isPaid ? "Yes" : "Not yet" }}
+      </div>
+
+      <div class="col-4 text-left"><h4>Notes</h4></div>
+      <div class="col-4 col-offset-4 align-content-center text-left">
+        {{ bill.notes }}
+      </div>
+
+      <hr
+        style="
+          border: 0;
+          border-top: 1px dashed #5ecabe;
+          height: 1px;
+          margin: 20px 0;
+          width: 100%;
+        "
+      />
+    </div>
+  </web-view-modal>
+
+  <!-- <web-view-modal
+    [viewModalHeader]="viewBillDetails.id"
+    [isModalVisible]="isCalendarView"
+    (onHide)="isCalendarView = !isCalendarView"
+  >
+    <div viewModalBody></div>
+  </web-view-modal> -->
+</div>

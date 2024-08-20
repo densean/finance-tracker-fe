@@ -1,0 +1,19 @@
+<p-dialog
+  [header]="modalTitle"
+  [modal]="true"
+  [(visible)]="isModalVisible"
+  [style]="{ width: '40rem' }"
+  (onHide)="onModalHide()"
+  class="text-center"
+>
+  <ng-content select="[editModalForm]"> </ng-content>
+  <div class="grid col-12">
+    <web-button
+      class="col-6 cancel-button"
+      buttonTitle="Cancel"
+      (click)="onEditCancellation()"
+    ></web-button>
+    <web-button class="col-6" buttonTitle="Save" (click)="onEditConfirmation()">
+    </web-button>
+  </div>
+</p-dialog>

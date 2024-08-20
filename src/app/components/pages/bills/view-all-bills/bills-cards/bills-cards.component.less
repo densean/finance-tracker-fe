@@ -1,0 +1,59 @@
+::ng-deep .web-bills-cards {
+  .card-body,
+  .card-header {
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+    .term-occurrence {
+      padding: 8px;
+      .loading-bar {
+        margin: auto;
+        height: 4px;
+        width: 16rem;
+        background-color: aliceblue;
+        border-radius: 1rem;
+        position: relative;
+        overflow: hidden;
+
+        .fill {
+          top: 0;
+          left: 0;
+          height: 4px;
+          width: 50%;
+          position: absolute;
+        }
+      }
+    }
+  }
+
+  .card-body {
+    margin-top: 4px;
+  }
+
+  .card-header {
+    padding-top: 12px;
+  }
+
+  .card-footer {
+    web-button {
+      button {
+        text-align: center;
+        padding: 0;
+        aspect-ratio: 2/1;
+        font-size: 14px;
+      }
+    }
+    .cancel-button {
+      button {
+        background-color: orange;
+        border-color: orange;
+
+        &:hover {
+          background-color: chocolate;
+          border-color: chocolate;
+        }
+      }
+    }
+  }
+}

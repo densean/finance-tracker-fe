@@ -1,0 +1,10 @@
+<p-dialog
+  header="Save successful"
+  [modal]="true"
+  [(visible)]="isModalVisible"
+  [style]="{ width: '40rem' }"
+  (onHide)="onModalHide()"
+  class="text-center"
+>
+  <p>{{ modalMessage }}</p>
+</p-dialog>

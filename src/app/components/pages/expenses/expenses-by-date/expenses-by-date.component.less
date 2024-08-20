@@ -1,0 +1,60 @@
+::ng-deep .web-expenses-by-date {
+  height: 69.1vh;
+  .p-tabview-nav-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .year-nav {
+    margin: 0;
+
+    h3 {
+      color: #343a40;
+      margin: 0;
+    }
+
+    i:hover {
+      cursor: pointer;
+      color: #14b8a6;
+    }
+
+    .pi.disabled {
+      color: #c0c0c0;
+      pointer-events: none;
+    }
+  }
+
+  .cards-z-3 {
+    transform: scale(0.9);
+  }
+
+  .cards-z-1 {
+    transform: scale(0.8);
+  }
+
+  .arrow-navigators {
+    i {
+      cursor: pointer;
+      color: #14b8a6;
+      font-size: 2.5rem;
+      transition: color 0.3s ease;
+
+      &.disabled {
+        pointer-events: none;
+        cursor: default;
+        color: #c0c0c0;
+      }
+
+      &:hover {
+        &.disabled {
+          pointer-events: none;
+          color: #d3d3d3;
+        }
+
+        &:not(.disabled) {
+          color: #0f766e;
+        }
+      }
+    }
+  }
+}

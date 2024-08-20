@@ -1,0 +1,26 @@
+<div
+  class="p-field"
+  [ngClass]="{
+    'has-error':
+      controlName.invalid && (controlName.dirty || controlName.touched)
+  }"
+>
+  <label for="web-input-title">{{ inputTitle }}</label>
+  <input
+    [type]="inputType"
+    aria-describedby="webinput-help"
+    (keydown)="onKeyDown($event)"
+    [formControl]="controlName"
+    pInputText
+    [placeholder]="inputPlaceHolder"
+  />
+  <small id="web-input-help" *ngIf="inputDescription">{{
+    inputDescription
+  }}</small>
+  <small
+    class="p-error"
+    *ngIf="controlName.invalid && (controlName.dirty || controlName.touched)"
+  >
+    {{ errorMessage }}
+  </small>
+</div>

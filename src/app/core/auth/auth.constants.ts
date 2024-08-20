@@ -1,0 +1,1 @@
+export const AUTH_ROLES = ['ROLE_USER', 'ROLE_SUPER_ADMIN'];

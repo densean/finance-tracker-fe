@@ -1,0 +1,17 @@
+<div
+  class="menu-header bg-primary h-8rem border border-round-top-md border-bottom-none z-1"
+></div>
+
+<p-listbox
+  [options]="options"
+  optionLabel="name"
+  class="z-0"
+  [(ngModel)]="initSelectedBills"
+>
+  <ng-template pTemplate="item" let-lists>
+    <div class="flex align-items-center gap-2">
+      <i [ngClass]="lists.icon" class="gap-2"></i>
+      <div>{{ lists.name }}</div>
+    </div>
+  </ng-template>
+</p-listbox>

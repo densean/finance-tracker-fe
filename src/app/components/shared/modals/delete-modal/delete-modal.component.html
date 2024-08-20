@@ -1,0 +1,27 @@
+<div class="delete-modal">
+  <p-dialog
+    header="Confirm deletion"
+    [modal]="true"
+    [(visible)]="isModalVisible"
+    [style]="{ width: '25rem' }"
+    (onHide)="onModalHide()"
+    class="text-center"
+  >
+    <div>
+      <p>Delete this item?</p>
+      <div class="grid col-12">
+        <web-button
+          class="col-6 cancel-button"
+          buttonTitle="Cancel"
+          (click)="onDeleteCancellation()"
+        ></web-button>
+        <web-button
+          class="col-6"
+          buttonTitle="Confirm"
+          (click)="onDeleteConfirmation()"
+        >
+        </web-button>
+      </div>
+    </div>
+  </p-dialog>
+</div>

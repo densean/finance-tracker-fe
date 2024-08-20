@@ -1,0 +1,33 @@
+<div class="web-view-all-bills">
+  <div class="col-12 grid pr-0 mt-0 pt-0">
+    <div class="col-2 pl-0">
+      <div class="border border-round border-500 h-15rem shadow-3 mb-4">
+        <web-bills-list
+          [options]="menuItems"
+          [lists]="menuItems"
+          [initSelectedBills]="menuItems[0].name"
+        >
+        </web-bills-list>
+      </div>
+
+      <label class="mb-0 text-600">Month</label>
+      <p-calendar
+        view="month"
+        dateFormat="mm/yy"
+        [showIcon]="true"
+        [readonlyInput]="true"
+        [(ngModel)]="initialDate"
+      />
+    </div>
+    <div class="col-7">
+      <div class="bill-cards border border-round border-500 shadow-3 mb-5 p-3">
+        <web-bills-cards [bills]="sampleBill"></web-bills-cards>
+      </div>
+    </div>
+    <div class="col-3 pr-0">
+      <div
+        class="bill-display border border-round border-500 shadow-3 mb-5 pr-0"
+      ></div>
+    </div>
+  </div>
+</div>

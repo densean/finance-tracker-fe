@@ -1,0 +1,97 @@
+<div class="web-dashboard grid">
+  <div class="col-5">
+    <div class="dashboard-cards nested-grid">
+      <div class="grid">
+        <web-cards cardHeaderTitle="Daily summary" class="col-4 text-center">
+          <div cardBody class="text-center">
+            <h5>Today you spent a lot on:</h5>
+            <!-- <span class="material-icons-outlined"> lock </span>
+              -->
+            <mat-icon class="text-primary category-icon">{{
+              determineCategoryIcon(dailySummary.category)
+            }}</mat-icon>
+            <h3>{{ dailySummary.category }}</h3>
+            <p>{{ "for ₱" + dailySummary.amount.toFixed(2) }}</p>
+          </div>
+          <div cardFooter>
+            <p-button icon="pi pi-angle-right"><h5>View report</h5></p-button>
+          </div>
+        </web-cards>
+
+        <web-cards cardHeaderTitle="Weekly summary" class="col-4 text-center">
+          <div cardBody class="text-center">
+            <h5>This week you spent a lot on:</h5>
+            <mat-icon class="text-primary category-icon">{{
+              determineCategoryIcon(weeklySummary.category)
+            }}</mat-icon>
+            <h3>{{ weeklySummary.category }}</h3>
+
+            <p>{{ "for ₱" + weeklySummary.amount.toFixed(2) }}</p>
+          </div>
+          <div cardFooter>
+            <p-button icon="pi pi-angle-right"><h5>View report</h5></p-button>
+          </div>
+        </web-cards>
+
+        <web-cards cardHeaderTitle="Monthly summary" class="col-4 text-center">
+          <div cardBody class="text-center">
+            <h5>This month you spent a lot on:</h5>
+            <mat-icon class="text-primary category-icon">{{
+              determineCategoryIcon(monthlySummary.category)
+            }}</mat-icon>
+            <h3>{{ monthlySummary.category }}</h3>
+            <p>{{ "for ₱" + monthlySummary.amount.toFixed(2) }}</p>
+          </div>
+          <div cardFooter>
+            <p-button icon="pi pi-angle-right"><h5>View report</h5></p-button>
+          </div>
+        </web-cards>
+
+        <web-cards cardHeaderTitle="Bill reminder" class="col-12 bill-reminder">
+          <div
+            cardBody
+            *ngFor="let item of billDisplay"
+            class="col-12 grid p-1"
+          >
+            <div class="col-10 col-offset-1 p-1">
+              <div class="col-12 grid p-0 text-base">
+                <div class="col-4 text-left p-0">
+                  {{ item.name }}
+                </div>
+                <div class="col-4 text-right p-0 font-medium">
+                  {{ item.amount | currency : "PHP" }}
+                </div>
+                <div class="col-4 text-left p-0 pl-5">
+                  {{ item.date | date : "MMMM dd" }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div cardFooter>
+            <p-button icon="pi pi-angle-right"
+              ><h5>View all upcoming bills</h5></p-button
+            >
+          </div>
+        </web-cards>
+      </div>
+    </div>
+  </div>
+  <div class="col-7">
+    <p-panel
+      header="Latest expenses"
+      class="5 shadow-5 nested-grid relative z-0"
+    >
+      <web-table
+        [tableScrollHeight]="expensesTableScrollHeight"
+        [tableRows]="expensesTableRows"
+        [tableItems]="expenses"
+        emptyTableMessage="No expenses found"
+        emptyTableSubMessage="Please add expenses"
+      >
+        <div empty-footer>
+          <web-button buttonTitle="Add expenses"></web-button>
+        </div>
+      </web-table>
+    </p-panel>
+  </div>
+</div>

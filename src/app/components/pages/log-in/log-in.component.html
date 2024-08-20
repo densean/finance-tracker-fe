@@ -1,0 +1,117 @@
+<div class="login-page">
+  <div class="login-column align-content-center">
+    <!-- <img src="../../../../assets/images/login.png" class="login-image" alt="" /> -->
+  </div>
+
+  <div class="login-forms">
+    <div class="login" *ngIf="isLogin">
+      <h1>Welcome back!</h1>
+      <web-input
+        [inputTitle]="inputDetails.username.inputTitle"
+        inputType="text"
+        [controlName]="loginForm.controls.loginUsername"
+        [errorMessage]="getLoginErrorMessage('loginUsername')"
+      >
+      </web-input>
+
+      <web-input
+        [inputTitle]="inputDetails.password.inputTitle"
+        inputType="password"
+        [controlName]="loginForm.controls.loginPassword"
+        [errorMessage]="getLoginErrorMessage('loginPassword')"
+      >
+      </web-input>
+      <a href="" class="forgot-password">Forgot password?</a>
+
+      <web-button
+        [buttonTitle]="inputDetails.buttonTitle.login"
+        (click)="onUserLogin()"
+      ></web-button>
+
+      <div class="login-anchor">
+        <p>Don't have an account?</p>
+        <a (click)="onAnchorClicked()">Sign Up</a>
+      </div>
+    </div>
+
+    <div class="sign-up" *ngIf="!isLogin">
+      <h1>Sign up!</h1>
+      <web-input
+        [inputTitle]="inputDetails.firstName.inputTitle"
+        inputType="text"
+        [controlName]="signUpForm.controls.firstName"
+        [errorMessage]="getSignUpErrorMessage('firstName')"
+      >
+      </web-input>
+
+      <web-input
+        [inputTitle]="inputDetails.lastName.inputTitle"
+        inputType="text"
+        [controlName]="signUpForm.controls.lastName"
+        [errorMessage]="getSignUpErrorMessage('lastName')"
+      >
+      </web-input>
+
+      <web-input
+        [inputTitle]="inputDetails.email.inputTitle"
+        inputType="email"
+        [controlName]="signUpForm.controls.email"
+        [errorMessage]="getSignUpErrorMessage('email')"
+      >
+      </web-input>
+
+      <web-input
+        [inputTitle]="inputDetails.username.inputTitle"
+        inputType="text"
+        [controlName]="signUpForm.controls.username"
+        [errorMessage]="getSignUpErrorMessage('username')"
+      >
+      </web-input>
+
+      <web-calendar
+        [inputTitle]="inputDetails.dateOfBirth.inputTitle"
+        [controlName]="signUpForm.controls.dob"
+        [errorMessage]="getSignUpErrorMessage('dob')"
+      >
+      </web-calendar>
+
+      <web-input
+        [inputTitle]="inputDetails.password.inputTitle"
+        inputType="password"
+        [controlName]="signUpForm.controls.password"
+        [errorMessage]="getSignUpErrorMessage('password')"
+      >
+      </web-input>
+
+      <web-input
+        [inputTitle]="inputDetails.confirmPassword.inputTitle"
+        inputType="password"
+        [controlName]="signUpForm.controls.confirmPassword"
+        [errorMessage]="getSignUpErrorMessage('confirmPassword')"
+      >
+      </web-input>
+
+      <web-button
+        [buttonTitle]="inputDetails.buttonTitle.register"
+        (click)="onUserSignUp()"
+      ></web-button>
+
+      <p-dialog
+        header="Sign up successful"
+        [modal]="true"
+        [(visible)]="modalVisible"
+        [style]="{ width: '25rem' }"
+        (onHide)="onDialogClose()"
+      >
+        <div>
+          <p>Sign up successful, please log in!</p>
+        </div>
+      </p-dialog>
+
+      <div class="login-anchor">
+        <p>Have an account?</p>
+        <a (click)="onAnchorClicked()">Log-in</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,202 @@
+<div class="web-expenses grid">
+  <div class="col-5">
+    <div class="grid">
+      <div class="col-12 text-center">
+        <h3>Add expenses</h3>
+      </div>
+      <div class="col-8 col-offset-2">
+        <web-input
+          [inputTitle]="inputDetails.description.inputTitle"
+          inputType="text"
+          [controlName]="expensesForm.controls.name"
+          [inputPlaceHolder]="inputDetails.description.placeholder"
+          [errorMessage]="getExpensesErrorMessage('description')"
+        />
+
+        <web-dropdown
+          [inputTitle]="inputDetails.category.inputTitle"
+          [controlName]="expensesForm.controls.category"
+          [dropDownOptions]="expensesCategoriesList"
+          [placeholderLabel]="inputDetails.category.placeholder"
+          [errorMessage]="getExpensesErrorMessage('category')"
+        >
+        </web-dropdown>
+
+        <web-calendar
+          [inputTitle]="inputDetails.expensesDate.inputTitle"
+          [controlName]="expensesForm.controls.expensesDate"
+          [calendarPlaceHolder]="inputDetails.expensesDate.placeholder"
+          [errorMessage]="getExpensesErrorMessage('expensesDate')"
+        >
+        </web-calendar>
+
+        <web-input
+          [inputTitle]="inputDetails.amount.inputTitle"
+          inputType="number"
+          [controlName]="expensesForm.controls.amount"
+          [inputPlaceHolder]="inputDetails.amount.placeholder"
+          [errorMessage]="getExpensesErrorMessage('amount')"
+        />
+
+        <web-dropdown
+          [inputTitle]="inputDetails.paymentMethod.inputTitle"
+          [controlName]="expensesForm.controls.paymentMethod"
+          [dropDownOptions]="expensesPaymentMethods"
+          [placeholderLabel]="inputDetails.paymentMethod.placeholder"
+          [errorMessage]="getExpensesErrorMessage('paymentMethod')"
+        >
+        </web-dropdown>
+        <!--
+        <web-text-area
+          [textAreaTitle]="inputDetails.remarks.inputTitle"
+          [controlName]="expensesForm.controls.remarks"
+          [textAreaPlaceholder]="inputDetails.remarks.placeholder"
+        >
+        </web-text-area> -->
+
+        <web-button buttonTitle="Save" (click)="saveExpenses()"></web-button>
+      </div>
+    </div>
+  </div>
+  <div class="col-7">
+    <p-panel
+      header="Expenses list"
+      class="nested-grid shadow-2 relative z-1 text-center"
+    >
+      <web-table
+        [allowViewEditActions]="allowViewEdit"
+        [tableItems]="expensesList"
+        [tableScrollHeight]="expensesTableScrollHeight"
+        [tableRows]="expensesTableRows"
+        emptyTableMessage="No expenses found"
+        (onEdit)="editExpensesRow($event)"
+        (onDelete)="deleteExpensesRow($event)"
+        (onView)="viewExpensesRow($event)"
+      >
+      </web-table>
+    </p-panel>
+
+    <div class="col-4 col-offset-8 view-anchor" *ngIf="expensesList.length">
+      <h3>
+        <a (click)="navigateToExpensesByDate()">View Expenses by Date</a>
+        <i class="pi pi-chevron-right"></i>
+      </h3>
+    </div>
+  </div>
+
+  <web-delete-modal
+    [isModalVisible]="isDeleteExpenses"
+    (onConfirmDelete)="confirmDeletion()"
+    (onCancelDelete)="cancelDeletion()"
+    (onHideModal)="cancelDeletion()"
+  ></web-delete-modal>
+
+  <web-edit-modal
+    modalTitle="Edit expenses"
+    [isModalVisible]="isEditExpenses"
+    (onConfirmEdit)="confirmEdit()"
+    (onCancelEdit)="cancelEdit()"
+    (onHideModal)="cancelEdit()"
+  >
+    <div editModalForm>
+      <div class="col-12 edit-form">
+        <div class="col-8 col-offset-2">
+          <web-input
+            [inputTitle]="inputDetails.description.inputTitle"
+            inputType="text"
+            [controlName]="editExpensesForm.controls.editName"
+            [inputPlaceHolder]="inputDetails.description.placeholder"
+            [errorMessage]="getExpensesErrorMessage('description')"
+          />
+
+          <web-dropdown
+            [inputTitle]="inputDetails.category.inputTitle"
+            [controlName]="editExpensesForm.controls.editCategory"
+            [dropDownOptions]="expensesCategoriesList"
+            [placeholderLabel]="inputDetails.category.placeholder"
+            [errorMessage]="getExpensesErrorMessage('category')"
+          >
+          </web-dropdown>
+
+          <web-calendar
+            [inputTitle]="inputDetails.expensesDate.inputTitle"
+            [controlName]="editExpensesForm.controls.editExpensesDate"
+            [calendarPlaceHolder]="inputDetails.expensesDate.placeholder"
+            [errorMessage]="getExpensesErrorMessage('expensesDate')"
+          >
+          </web-calendar>
+
+          <web-input
+            [inputTitle]="inputDetails.amount.inputTitle"
+            inputType="number | string"
+            [controlName]="editExpensesForm.controls.editAmount"
+            [inputPlaceHolder]="inputDetails.amount.placeholder"
+            [errorMessage]="getExpensesErrorMessage('amount')"
+          />
+
+          <web-dropdown
+            [inputTitle]="inputDetails.paymentMethod.inputTitle"
+            [controlName]="editExpensesForm.controls.editPaymentMethod"
+            [dropDownOptions]="expensesPaymentMethods"
+            [placeholderLabel]="inputDetails.paymentMethod.placeholder"
+            [errorMessage]="getExpensesErrorMessage('paymentMethod')"
+          >
+          </web-dropdown>
+
+          <web-text-area
+            [inputTitle]="inputDetails.remarks.inputTitle"
+            [controlName]="editExpensesForm.controls.editRemarks"
+            [textAreaPlaceholder]="inputDetails.remarks.placeholder"
+          >
+          </web-text-area>
+        </div>
+      </div>
+    </div>
+  </web-edit-modal>
+
+  <web-save-modal
+    [isModalVisible]="isSaveExpenses"
+    modalMessage="The expenses has been saved"
+    (onHideModal)="expensesForm.reset()"
+  />
+
+  <web-view-modal
+    [viewModalHeader]="viewExpensesDetailsHeader"
+    [isModalVisible]="isViewExpenses"
+    (onHide)="isViewExpenses = !isViewExpenses"
+  >
+    <div viewModalBody class="my-5">
+      <mat-icon class="text-primary category-icon">{{
+        determineCategoryIcon(viewExpensesDetails.category)
+      }}</mat-icon>
+      <div class="modal-body">
+        <span class="grid col-12">
+          <h4 class="col-4 text-left">Name</h4>
+          <p class="col-offset-4 col-4 text-left align-content-center">
+            {{ viewExpensesDetails.name }}
+          </p>
+          <h4 class="col-4 text-left">Category</h4>
+          <p class="col-offset-4 col-4 text-left align-content-center">
+            {{ viewExpensesDetails.category }}
+          </p>
+          <h4 class="col-4 text-left">Date</h4>
+          <p class="col-offset-4 col-4 text-left align-content-center">
+            {{ viewExpensesDetails.date | date : "MMM dd yyyy" }}
+          </p>
+          <h4 class="col-5 text-left">Payment method</h4>
+          <p class="col-offset-3 col-4 text-left align-content-center">
+            {{ viewExpensesDetails.paymentMethod }}
+          </p>
+          <h4 class="col-4 text-left">Amount</h4>
+          <p class="col-offset-4 col-4 text-left align-content-center">
+            {{ viewExpensesDetails.amount }}
+          </p>
+          <h4 class="col-4 text-left">Remarks</h4>
+          <p class="col-offset-4 col-4 text-left align-content-center">
+            {{ viewExpensesDetails.remarks }}
+          </p>
+        </span>
+      </div>
+    </div>
+  </web-view-modal>
+</div>
