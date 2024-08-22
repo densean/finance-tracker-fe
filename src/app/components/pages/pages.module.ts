@@ -23,6 +23,8 @@ import { ViewAllBillsComponent } from './bills/view-all-bills/view-all-bills.com
 import { ListboxModule } from 'primeng/listbox';
 import { BillsListComponent } from './bills/view-all-bills/bills-list/bills-list.component';
 import { BillsCardsComponent } from './bills/view-all-bills/bills-cards/bills-cards.component';
+import { ViewBillByNameComponent } from './bills/view-all-bills/view-bill-by-name/view-bill-by-name.component';
+// import { ViewBillByNameComponent } from './bills/view-bill-by-name/view-bill-by-name.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { BillsCardsComponent } from './bills/view-all-bills/bills-cards/bills-ca
     ViewAllBillsComponent,
     BillsListComponent,
     BillsCardsComponent,
+    ViewBillByNameComponent,
   ],
   imports: [
     CommonModule,

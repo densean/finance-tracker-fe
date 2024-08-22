@@ -35,6 +35,7 @@ import { ViewModalComponent } from './modals/view-modal/view-modal.component';
 import { InputWithDropdownComponent } from './input-with-dropdown/input-with-dropdown.component';
 import { TabViewModule } from 'primeng/tabview';
 import { ListboxModule } from 'primeng/listbox';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { ListboxModule } from 'primeng/listbox';
     DropdownModule,
     TabViewModule,
     ListboxModule,
+    DividerModule,
     // InputGroupAddonModule,
     // InputGroupModule
   ],
@@ -100,6 +102,7 @@ import { ListboxModule } from 'primeng/listbox';
     ViewModalComponent,
     InputWithDropdownComponent,
     TabViewModule,
+    DividerModule,
   ],
 })
 export class SharedComponentsModule {}

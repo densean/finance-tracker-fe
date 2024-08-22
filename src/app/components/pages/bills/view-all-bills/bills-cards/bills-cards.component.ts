@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBillDisplay } from '../../bills.component.interface';
 
 @Component({
@@ -20,10 +20,23 @@ export class BillsCardsComponent implements OnInit {
   numberOfPaidBills = 2;
   widthFill = 0;
   widthFillInPercentage = '';
+  @Output() onViewBill = new EventEmitter();
+  @Output() onPaidBill = new EventEmitter();
 
   ngOnInit() {
     this.widthFill = (this.numberOfPaidBills / this.bills.term) * 100;
     this.widthFillInPercentage = `${this.widthFill}%`;
     console.log(this.widthFillInPercentage);
+  }
+
+  onViewButtonClicked(bills: any) {
+    this.onViewBill.emit(bills);
+    console.log(bills);
+    alert('view');
+  }
+
+  onPaidButtonClicked(bills: any) {
+    this.onPaidBill.emit(bills);
+    alert('paid');
   }
 }

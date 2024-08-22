@@ -56,13 +56,19 @@
             <div class="col-10 col-offset-1 p-1">
               <div class="col-12 grid p-0 text-base">
                 <div class="col-4 text-left p-0">
-                  {{ item.name }}
+                  <p>
+                    {{ item.name }}
+                  </p>
                 </div>
                 <div class="col-4 text-right p-0 font-medium">
-                  {{ item.amount | currency : "PHP" }}
+                  <p>
+                    {{ item.amount | currency : "PHP" }}
+                  </p>
                 </div>
-                <div class="col-4 text-left p-0 pl-5">
-                  {{ item.date | date : "MMMM dd" }}
+                <div class="col-4 text-left p-0 pl-2">
+                  <p>
+                    {{ item.date | date : "MMMM dd" }}
+                  </p>
                 </div>
               </div>
             </div>

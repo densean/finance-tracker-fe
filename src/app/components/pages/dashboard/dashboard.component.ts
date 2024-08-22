@@ -7,6 +7,10 @@ import {
   IDashboardReportCards,
 } from './dashboard.component.interface';
 import { IBillDisplay } from '../bills/bills.component.interface';
+// import { DashboardService } from 'src/app/core/pages/dashboard.service';
+// import { IExpensesDashboardRequest } from 'src/app/core/pages/models/dashboard.interface';
+import { DashboardService } from 'src/app/core/pages/dashboard/dashboard.service';
+import { IExpensesDashboardRequest } from 'src/app/core/pages/dashboard/dashboard.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -165,9 +169,22 @@ export class DashboardComponent implements OnInit {
   expensesTableRows = 15;
   billDisplay: IDashboardBills[] = [];
 
-  constructor(private datePipe: DatePipe) {}
+  constructor(
+    private datePipe: DatePipe,
+    private dashboardService: DashboardService
+  ) {}
 
   ngOnInit(): void {
+    let paginationRequest: IExpensesDashboardRequest = {
+      pageNo: 0,
+      pageSize: 20,
+    };
+    this.dashboardService
+      .getExpenses(4, paginationRequest)
+      .subscribe((response) => {
+        console.log(response);
+      });
+
     this.renderBillDisplays();
   }
 

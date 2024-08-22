@@ -1,0 +1,49 @@
+<div class="col-12 border border-round shadow-3 p-0 m-auto">
+  <div
+    class="header bg-primary text-center bg-primary pt-2 border border-round-top-lg"
+  >
+    <h3 class="pb-1">{{ bills[0].name }}</h3>
+    <p class="pb-1 text-700">Next payment due amount</p>
+    <h2 class="text-white-alpha-90">
+      {{ bills[0].amount | currency : "PHP" }}
+    </h2>
+    <div class="term-occurrence">
+      <div class="loading-bar">
+        <div
+          class="fill bg-orange-200 shadow-2"
+          [style.width]="widthFillInPercentage"
+        ></div>
+      </div>
+      <p class="text-right text-300 pt-1">
+        {{ paidBills }} of {{ bills.length }} installments paid
+      </p>
+    </div>
+  </div>
+  <div class="h-1rem bg-primary-100"></div>
+  <div class="body text-center">
+    <h3 class="text-800 pt-3">Payment schedule</h3>
+    <p class="pb-3 text-500">{{ bills.length }} payments</p>
+
+    <div *ngFor="let bill of bills; let i = index" class="payment-details">
+      <div class="bg-primary-400 align-content-center p-1 text-white">
+        {{ bill.dueDate | date : "MMM dd YYYY" }}
+      </div>
+      <div class="col-12 grid justify-content-center p-0 m-0 bill-details">
+        <p class="col-5 text-left pb-0 pl-4">Monthly installment</p>
+        <p class="col-5 col-offset-2 text-right pb-0 pr-4">
+          {{ bill.amount | currency : "PHP" }}
+        </p>
+        <p class="col-5 text-left pt-0 pl-4">
+          {{ i + 1 }} of {{ bills.length }}
+        </p>
+        <p class="col-5 col-offset-2 text-right pt-0 pr-4">
+          {{ bill.isPaid ? "Paid" : "Not paid" }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="h-1rem bg-primary-100"></div>
+  <div
+    class="bg-primary bg-primary pb-2 border border-round-bottom-lg h-3rem"
+  ></div>
+</div>

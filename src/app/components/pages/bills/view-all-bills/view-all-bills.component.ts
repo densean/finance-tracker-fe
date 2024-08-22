@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { MONTHS } from '../../expenses/expenses-by-date/expenses-by-date.component.constants';
 import { IViewAllBillRequest } from './view-all-bills.component.interface';
 import { IBillDisplay } from '../bills.component.interface';
+import {
+  VIEW_ALL_BILLS_API,
+  VIEW_BILL_BY_NAME_API,
+} from './view-all-bills.components.mock';
 
 @Component({
   selector: 'app-view-all-bills',
@@ -20,7 +24,7 @@ export class ViewAllBillsComponent {
   maxYear: number = this.initialYear + this.yearLimit;
   billsByMonthRequest: IViewAllBillRequest = { month: 0, year: 0 };
   displayedBills = [];
-  displayedBillsAPI = [];
+  // displayedBillsAPI = [];
   menuItems = [
     { name: 'Upcoming Bills', icon: 'pi pi-calendar' },
     { name: 'Overdue Bills', icon: 'pi pi-exclamation-triangle' },
@@ -37,9 +41,20 @@ export class ViewAllBillsComponent {
     isPaid: false,
     dueDate: new Date('08-25-2024'),
   };
+  viewAllBillsAPI: IBillDisplay[] = VIEW_ALL_BILLS_API;
+  viewBillByNameAPI: IBillDisplay[] = [];
+  isViewBill: boolean = false;
 
   ngOnInit() {
     this.initBillCards();
+  }
+
+  onView(bill: IBillDisplay) {
+    this.viewBillByNameAPI = [];
+    console.log(bill);
+    //service to get bill by name
+    this.viewBillByNameAPI = VIEW_BILL_BY_NAME_API;
+    this.isViewBill = true;
   }
 
   initBillCards() {

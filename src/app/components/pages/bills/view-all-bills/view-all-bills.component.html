@@ -20,14 +20,34 @@
       />
     </div>
     <div class="col-7">
-      <div class="bill-cards border border-round border-500 shadow-3 mb-5 p-3">
-        <web-bills-cards [bills]="sampleBill"></web-bills-cards>
+      <div
+        class="bill-cards overflow-hidden lg:overflow-auto surface-overlay border border-round border-500 grid shadow-3 just justify-content-center pt-2 pb-2 mt-0"
+        style="height: 39rem"
+      >
+        <web-bills-cards
+          *ngFor="let bill of viewAllBillsAPI"
+          [bills]="bill"
+          class="p-2"
+          (onViewBill)="onView(bill)"
+        ></web-bills-cards>
       </div>
     </div>
     <div class="col-3 pr-0">
       <div
-        class="bill-display border border-round border-500 shadow-3 mb-5 pr-0"
-      ></div>
+        class="bill-display border border-round border-500 shadow-3 mb-5 justify-content-center p-3 overflow-hidden lg:overflow-auto surface-overlay"
+      >
+        <web-view-bill-by-name
+          [bills]="viewBillByNameAPI"
+          *ngIf="isViewBill"
+        ></web-view-bill-by-name>
+        <div
+          class="text-center align-content-center"
+          *ngIf="!isViewBill"
+          style="height: 100%"
+        >
+          <p>Please select a bill to display</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
